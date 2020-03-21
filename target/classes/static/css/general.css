@@ -1,0 +1,22 @@
+body {
+    background:url('../images/bgi.jpg');
+}
+i.material-icons{
+    font-size:100px;
+    color:darkcyan;
+    padding:0px 63px;
+
+}
+div.container{
+    padding:40px;
+    weigth:840px;
+    display:flex;
+    width: fit-content;
+}
+.form-padrao{
+        max-width: 250px;
+        padding: 30px 10px 20px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 3px solid rgba(0,0,0,0.1);
+}
