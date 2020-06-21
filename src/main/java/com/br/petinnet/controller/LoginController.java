@@ -1,5 +1,6 @@
 package com.br.petinnet.controller;
 
+import com.br.petinnet.model.Role;
 import com.br.petinnet.model.User;
 import com.br.petinnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,38 @@ public class LoginController {
         return modelAndView;
     }
 
+    @GetMapping(value="/home")
+    public ModelAndView homeMain(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("homeMessage","Usuario possui permissoes de: " + roles(user));
+        modelAndView.setViewName("/home");
+        return modelAndView;
+    }
+
+    private StringBuilder roles(User user) {
+        StringBuilder roles = new StringBuilder();
+        for (Role role: user.getRoles()) {
+            roles.append(role.getRole()+"\n");
+        }
+        return roles;
+    }
+
+    @GetMapping(value="/user/home")
+    public ModelAndView homeUser(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
+
     @GetMapping(value="/admin/home")
-    public ModelAndView home(){
+    public ModelAndView homeAdm(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
