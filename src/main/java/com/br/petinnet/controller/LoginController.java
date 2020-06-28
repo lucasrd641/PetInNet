@@ -88,8 +88,10 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("userMessage","Content Available Only for Users with User Role");
+        modelAndView.addObject("userName", user.getUserName());
+        modelAndView.addObject("name", user.getName() + user.getLastName());
+//        modelAndView.addObject("seguidores", user.getUserName());
+//        modelAndView.addObject("seguindo", user.getUserName());
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
