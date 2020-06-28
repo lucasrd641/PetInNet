@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
@@ -60,21 +61,26 @@ public class LoginController {
 
     @GetMapping(value="/home")
     public ModelAndView homeMain(){
+        String redirected;
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("homeMessage","Usuario possui permissoes de: " + roles(user));
-        modelAndView.setViewName("/home");
-        return modelAndView;
+        return new ModelAndView(new RedirectView(redirect(user)));
     }
 
-    private StringBuilder roles(User user) {
-        StringBuilder roles = new StringBuilder();
+    private String redirect(User user) {
+        String[] roles = new String[user.getRoles().size()];
+        String url="";
+        int i=0;
         for (Role role: user.getRoles()) {
-            roles.append(role.getRole()+"\n");
+            if(role.getId()==1){
+                url="admin/home";
+            }else{
+                url="user/home";
+            }
+            roles[i++] = role.getRole();
         }
-        return roles;
+        return url;
     }
 
     @GetMapping(value="/user/home")
