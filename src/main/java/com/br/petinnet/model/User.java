@@ -41,6 +41,15 @@ public class User {
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
+    @Column(name = "following")
+    private Integer following;
+    @Column(name = "followers")
+    private Integer followers;
+    @Column(name = "user_description")
+    private String userDescription;
+    @Column(name = "user_pet_name")
+    @NotEmpty(message = "*Please provide your Pet's name")
+    private String userPetName;
     @Column(name = "active")
     private Boolean active;
     @ManyToMany(cascade = CascadeType.MERGE)

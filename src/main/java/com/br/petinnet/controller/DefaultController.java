@@ -14,9 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
-public class LoginController {
+public class DefaultController {
 
     @Autowired
     private UserService userService;
@@ -53,9 +54,18 @@ public class LoginController {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("login");
 
         }
+        return modelAndView;
+    }
+
+    @GetMapping(value="/user/search")
+    public ModelAndView search(String name_search){
+        List<User> users = userService.findUserByString(name_search);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("user/search");
         return modelAndView;
     }
 
@@ -89,10 +99,39 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         modelAndView.addObject("userName", user.getUserName());
-        modelAndView.addObject("name", user.getName() + user.getLastName());
-//        modelAndView.addObject("seguidores", user.getUserName());
-//        modelAndView.addObject("seguindo", user.getUserName());
+        modelAndView.addObject("userPetName", user.getUserPetName());
+        modelAndView.addObject("name", user.getName() + " " +user.getLastName());
+        modelAndView.addObject("followers", "Followers: "+user.getFollowers());
+        modelAndView.addObject("following", "Following: "+user.getFollowing());
+        modelAndView.addObject("userDescription", user.getUserDescription());
         modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
+
+    @GetMapping(value="/user/profile")
+    public ModelAndView profileUser(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("userPetName", user.getUserPetName());
+        modelAndView.addObject("name", user.getName() + " " +user.getLastName());
+        modelAndView.addObject("followers", "Followers: "+user.getFollowers());
+        modelAndView.addObject("following", "Following: "+user.getFollowing());
+        modelAndView.addObject("userDescription", user.getUserDescription());
+
+        modelAndView.setViewName("user/profile");
+        return modelAndView;
+    }
+    @PostMapping(value = "/user/profile")
+    public ModelAndView editUser(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+            userService.editUser(user);
+            modelAndView.addObject("successMessage", "The Profile has been edited successfully");
+            modelAndView.addObject("user", user);
+            modelAndView.setViewName("user/profile");
+
+
         return modelAndView;
     }
 
