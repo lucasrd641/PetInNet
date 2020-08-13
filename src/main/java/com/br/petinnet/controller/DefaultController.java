@@ -132,6 +132,7 @@ public class DefaultController {
         modelAndView.addObject("followers", "Followers: "+user.getFollowers().size());
         modelAndView.addObject("following", "Following: "+user.getFollowing().size());
         modelAndView.addObject("userDescription", user.getUserDescription());
+        modelAndView.addObject("usersFollowing", user.getFollowing());
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
