@@ -3,18 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a0384d42-0ee2-47f7-a367-3f74bbfc40ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/petinnet/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/petinnet/controller/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/br/petinnet/controller/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/petinnet/controller/DefaultController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/br/petinnet/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/petinnet/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/br/petinnet/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/petinnet/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/br/petinnet/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/br/petinnet/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/br/petinnet/controller/LoginController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/br/petinnet/model/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/br/petinnet/model/User$UserBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/br/petinnet/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/br/petinnet/model/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/br/petinnet/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/br/petinnet/repository/UserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/br/petinnet/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/br/petinnet/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/registration.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +20,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Class" />
         <option value="HTML File" />
       </list>
     </option>
@@ -121,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1593375687675</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Search generating divs with thymeleaf">
+      <created>1596542722197</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1596542722198</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -131,45 +135,51 @@
     <MESSAGE value="Diferenciando Roles e Header" />
     <MESSAGE value="bugs" />
     <MESSAGE value="Template for user home" />
-    <option name="LAST_COMMIT_MESSAGE" value="Template for user home" />
+    <MESSAGE value="Search generating divs with thymeleaf" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search generating divs with thymeleaf" />
   </component>
   <component name="WindowStateProjectService">
     <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser" timestamp="1592763655849">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1592763655849" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1596669908985">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596669908985" />
     <state x="696" y="367" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1592425606433">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="696" y="367" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1592425606433" />
-    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1593375685803">
+    <state x="530" y="9" key="CommitChangelistDialog2" timestamp="1596542719615">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="530" y="9" key="CommitChangelistDialog2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542719615" />
+    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593375685803" />
+    <state width="1493" height="492" key="GridCell.Tab.0.bottom" timestamp="1597329946023">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593375685803" />
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom" timestamp="1596542090424">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
     <state width="746" height="140" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1595420234739" />
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542090424" />
-    <state width="1493" height="72" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596407148233" />
-    <state width="1877" height="235" key="GridCell.Tab.0.center" timestamp="1596542090424">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596806825631" />
+    <state width="1493" height="492" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597329946023" />
+    <state width="1493" height="492" key="GridCell.Tab.0.center" timestamp="1597329946023">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="746" height="140" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1595420234738" />
-    <state width="1877" height="235" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542090424" />
-    <state width="1493" height="72" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596407148233" />
-    <state width="1877" height="235" key="GridCell.Tab.0.left" timestamp="1596542090423">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="235" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596806825631" />
+    <state width="1493" height="492" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597329946023" />
+    <state width="1493" height="492" key="GridCell.Tab.0.left" timestamp="1597329946022">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="746" height="140" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1595420234738" />
-    <state width="1877" height="235" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542090423" />
-    <state width="1493" height="72" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596407148233" />
-    <state width="1877" height="235" key="GridCell.Tab.0.right" timestamp="1596542090424">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="235" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596806825630" />
+    <state width="1493" height="492" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597329946022" />
+    <state width="1493" height="492" key="GridCell.Tab.0.right" timestamp="1597329946023">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="746" height="140" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1595420234738" />
-    <state width="1877" height="235" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542090424" />
-    <state width="1493" height="72" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596407148233" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596806825631" />
+    <state width="1493" height="492" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597329946023" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1593295187622">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -198,21 +208,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1592425873953" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1596540018855">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="525" y="273" key="com.intellij.ide.util.TipDialog" timestamp="1597321649490">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="656" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1595420222373" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596540018855" />
-    <state x="525" y="273" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1596454638359" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596794048633" />
+    <state x="525" y="273" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1597321649490" />
     <state x="723" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596542689334">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="723" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596542689334" />
     <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1592772458270" />
-    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1592425822483">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1596544299000">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="616" y="240" key="run.anything.popup/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1596544299000" />
+    <state x="431" y="145" width="672" height="679" key="search.everywhere.popup" timestamp="1597326119886">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
     <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1592425822483" />
+    <state x="431" y="145" width="672" height="679" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1597326119886" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/login$PetInNetApplication.ic" NAME="PetInNetApplication Coverage Results" MODIFIED="1595427720869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

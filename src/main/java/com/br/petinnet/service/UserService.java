@@ -38,6 +38,8 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
+    public void followById(Integer userId, Integer id) {userRepository.followById(userId,id);}
+    public void unFollowById(Integer userId, Integer id) {userRepository.unFollowById(userId,id);}
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -52,4 +54,5 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
 }

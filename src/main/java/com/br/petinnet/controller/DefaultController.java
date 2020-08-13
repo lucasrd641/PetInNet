@@ -9,7 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -62,13 +64,39 @@ public class DefaultController {
 
     @GetMapping(value="/user/search")
     public ModelAndView search(String name_search){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
         List<User> users = userService.findUserByString(name_search);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userPetName", user.getUserPetName());
+        modelAndView.addObject("name", user.getName() + " " +user.getLastName());
+        modelAndView.addObject("userMain", user);
         modelAndView.addObject("users", users);
+        modelAndView.addObject("searched", name_search);
+        modelAndView.addObject("followers", "Followers: "+user.getFollowers().size());
+        modelAndView.addObject("following", "Following: "+user.getFollowing().size());
+
         modelAndView.setViewName("user/search");
         return modelAndView;
     }
 
+
+    @GetMapping(value = "/user/follow{id}")
+    public ModelAndView followById(@RequestParam(value="id",required = true) Integer id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        userService.followById(user.getId(),id);
+        ModelAndView modelAndView = new ModelAndView();
+        return new ModelAndView(new RedirectView("/home"));
+    }
+    @GetMapping(value = "/user/unfollow{id}")
+    public ModelAndView unfollowById(@RequestParam(value="id",required = true) Integer id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        userService.unFollowById(user.getId(),id);
+        ModelAndView modelAndView = new ModelAndView();
+        return new ModelAndView(new RedirectView("/home"));
+    }
     @GetMapping(value="/home")
     public ModelAndView homeMain(){
         String redirected;
@@ -101,8 +129,8 @@ public class DefaultController {
         modelAndView.addObject("userName", user.getUserName());
         modelAndView.addObject("userPetName", user.getUserPetName());
         modelAndView.addObject("name", user.getName() + " " +user.getLastName());
-        modelAndView.addObject("followers", "Followers: "+user.getFollowers());
-        modelAndView.addObject("following", "Following: "+user.getFollowing());
+        modelAndView.addObject("followers", "Followers: "+user.getFollowers().size());
+        modelAndView.addObject("following", "Following: "+user.getFollowing().size());
         modelAndView.addObject("userDescription", user.getUserDescription());
         modelAndView.setViewName("user/home");
         return modelAndView;
@@ -116,8 +144,8 @@ public class DefaultController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("userPetName", user.getUserPetName());
         modelAndView.addObject("name", user.getName() + " " +user.getLastName());
-        modelAndView.addObject("followers", "Followers: "+user.getFollowers());
-        modelAndView.addObject("following", "Following: "+user.getFollowing());
+        modelAndView.addObject("followers", "Followers: "+user.getFollowers().size());
+        modelAndView.addObject("following", "Following: "+user.getFollowing().size());
         modelAndView.addObject("userDescription", user.getUserDescription());
 
         modelAndView.setViewName("user/profile");
@@ -130,8 +158,6 @@ public class DefaultController {
             modelAndView.addObject("successMessage", "The Profile has been edited successfully");
             modelAndView.addObject("user", user);
             modelAndView.setViewName("user/profile");
-
-
         return modelAndView;
     }
 

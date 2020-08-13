@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -41,10 +43,6 @@ public class User {
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
-    @Column(name = "following")
-    private Integer following;
-    @Column(name = "followers")
-    private Integer followers;
     @Column(name = "user_description")
     private String userDescription;
     @Column(name = "user_pet_name")
@@ -52,8 +50,26 @@ public class User {
     private String userPetName;
     @Column(name = "active")
     private Boolean active;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @ManyToMany
+    @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "follower_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> followers;
+
+    @ManyToMany
+    @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<User> following;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="user_follower",
+//            joinColumns={@JoinColumn(name="user_id")},
+//            inverseJoinColumns={@JoinColumn(name="follower_id")})
+//    private Set<User> following = new HashSet<User>();
+//
+//    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
+//    private Set<User> followBy = new HashSet<User>();
 
 }
