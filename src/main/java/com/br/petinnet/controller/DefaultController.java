@@ -1,5 +1,6 @@
 package com.br.petinnet.controller;
 
+import com.br.petinnet.model.Post;
 import com.br.petinnet.model.Role;
 import com.br.petinnet.model.User;
 import com.br.petinnet.service.UserService;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -41,6 +45,33 @@ public class DefaultController {
         return modelAndView;
     }
 
+//    @GetMapping(value="/user/createpost")
+//    public ModelAndView createPost(){
+//        ModelAndView modelAndView = new ModelAndView();
+//        Post post = new Post();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userService.findUserByUserName(auth.getName());
+//        post.setId_user(user.getId());
+//        modelAndView.addObject("post_user", post);
+//        modelAndView.setViewName("user/createpost");
+//        return modelAndView;
+//    }
+    @PostMapping(value="/user/createpost")
+    public ModelAndView createPost(String message, MultipartFile image) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        Post post = new Post();
+        post.setUser(user);
+        post.setPost_content(message);
+        post.setImg(image.getBytes());
+        LocalDateTime lt = LocalDateTime.now();
+        post.setPost_datetime(lt);
+        userService.savePost(post);
+        modelAndView.addObject("post_user", new Post());
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
     @PostMapping(value = "/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -67,6 +98,7 @@ public class DefaultController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<User> users = userService.findUserByString(name_search);
+        if(users.contains(user)){users.remove(user);};
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userPetName", user.getUserPetName());
         modelAndView.addObject("name", user.getName() + " " +user.getLastName());
@@ -82,7 +114,7 @@ public class DefaultController {
 
 
     @GetMapping(value = "/user/follow{id}")
-    public ModelAndView followById(@RequestParam(value="id",required = true) Integer id){
+    public ModelAndView followById(@RequestParam(value="id",required = true) int id){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         userService.followById(user.getId(),id);
@@ -90,7 +122,7 @@ public class DefaultController {
         return new ModelAndView(new RedirectView("/home"));
     }
     @GetMapping(value = "/user/unfollow{id}")
-    public ModelAndView unfollowById(@RequestParam(value="id",required = true) Integer id){
+    public ModelAndView unfollowById(@RequestParam(value="id",required = true) int id){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         userService.unFollowById(user.getId(),id);
@@ -103,6 +135,7 @@ public class DefaultController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
+
         return new ModelAndView(new RedirectView(redirect(user)));
     }
 

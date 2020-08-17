@@ -1,5 +1,6 @@
 package com.br.petinnet.service;
 
+import com.br.petinnet.model.Post;
 import com.br.petinnet.model.User;
 import com.br.petinnet.repository.RoleRepository;
 import com.br.petinnet.model.Role;
@@ -38,8 +39,8 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
-    public void followById(Integer userId, Integer id) {userRepository.followById(userId,id);}
-    public void unFollowById(Integer userId, Integer id) {userRepository.unFollowById(userId,id);}
+    public void followById(int userId, int id) {userRepository.followById(userId,id);}
+    public void unFollowById(int userId, int id) {userRepository.unFollowById(userId,id);}
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -55,4 +56,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void savePost(Post post) {
+
+        userRepository.savePost(post.getId(),post.getImg(),post.getPost_content(),post.getPost_datetime(),post.getUser().getId());
+    }
 }
