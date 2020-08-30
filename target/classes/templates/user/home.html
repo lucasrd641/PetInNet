@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="icon" href="../images/iconPaw.png" type="image/icon">
+
+
 </head>
 
 <body>
@@ -34,7 +36,7 @@
                 <a class="nav-link" href="/user/profile">My Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Your NewsFeed</a>
+                <a class="nav-link" href="/home">Your NewsFeed</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Have you seen me?</a>
@@ -66,7 +68,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="mr-2">
-                            <img  th:src="@{/images/dogchique.jpg}" class="rounded" width="80" alt="">
+                            <img  th:if="*{user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(user.img)}}" class="rounded" width="80" alt="">
                         </div>
                         <div class="ml-2">
                             <div class="h5" th:utext="${userPetName}"></div>
@@ -90,7 +92,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-9 gedf-main">
+        <div class="col-md-6 gedf-main">
 
             <!--- \\\\\\\Post-->
             <div class="card gedf-card">
@@ -108,12 +110,13 @@
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                            <form autocomplete="off" action="#" th:action="@{/user/createpost}" method="post" role="form" class="form-group">
+                            <form autocomplete="off" th:action="@{/user/createpost}" enctype="multipart/form-data" method="post" class="form-group">
                                 <label class="sr-only" for="message">post</label>
-                                <textarea class="form-control" id="message"rows="3" placeholder="What are you thinking?"></textarea>
+                                <textarea class="form-control" id="message" name="message"rows="3" placeholder="What are you thinking?"></textarea>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" accept="image/*" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Upload image</label>
+                                    <input type="file" class="custom-file-input" accept="image/*" name="customFile"  id="customFile"
+                                           onchange="document.getElementById('filelabel').innerHTML = $(this).val().replace(/C:\\fakepath\\/i, '')">
+                                    <label id="filelabel" class="custom-file-label" for="customFile" >Upload</label>
                                 </div>
                                 <div class="btn-toolbar justify-content-between">
                                     <div class="btn-group">
@@ -153,16 +156,16 @@
                 </div>
             </div>
 
-            <div class="card gedf-card">
+            <div class="card gedf-card" th:each="post: ${posts}">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-2">
-                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                <img class="rounded-circle" width="45" th:if="*{post.user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.user.img)}}" alt="">
                             </div>
                             <div class="ml-2">
-                                <div class="h5 m-0" th:utext="${userPetName}"></div>
-                                <div class="h7 text-muted" th:utext="${name}" ></div>
+                                <div class="h5 m-0" th:utext="${post.user.userPetName}"></div>
+                                <div class="h7 text-muted" th:utext="${post.user.name}" ></div>
                             </div>
                         </div>
 <!--                        <div>-->
@@ -182,20 +185,13 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
-                    <a class="card-link" href="#">
-                        <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
-                    </a>
-
-                    <p class="card-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor
-                        sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-                    </p>
+                    <p class="card-text" th:utext="${post.post_content}"></p>
+                    <img th:if="*{post.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.img)}}" style="max-width:100%;"/>
+                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o" th:utext="${post.agoTime}"></i></div>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+<!--                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>-->
                 </div>
             </div>
 

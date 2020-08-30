@@ -24,7 +24,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private int id;
+    private Integer id;
     @Column(name = "user_name")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
@@ -51,7 +51,8 @@ public class User {
     @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "user_img")
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(name = "user_img",length=100000)
     private byte[] img;
 
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -67,14 +68,6 @@ public class User {
     private List<User> following;
 
     @OneToMany(mappedBy = "user")
-    private Set<Post> posts;
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name="user_follower",
-//            joinColumns={@JoinColumn(name="user_id")},
-//            inverseJoinColumns={@JoinColumn(name="follower_id")})
-//    private Set<User> following = new HashSet<User>();
-//
-//    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
-//    private Set<User> followBy = new HashSet<User>();
+    private List<Post> posts;
 
 }

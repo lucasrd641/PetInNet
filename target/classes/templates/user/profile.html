@@ -34,7 +34,7 @@
                 <a class="nav-link" href="/user/profile">My Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Your NewsFeed</a>
+                <a class="nav-link" href="/home">Your NewsFeed</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Have you seen me?</a>
@@ -51,8 +51,8 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/user/search}" method="get">
+            <input class="form-control mr-sm-2" id="name_search" name="name_search" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -60,10 +60,10 @@
 <!--End of Navbar-->
 <div class="container-fluid gedf-wrapper">
     <div class="row align-items-start">
-        <div class="col-md-3 align-self-center">
+        <div class="col-md-3 align-self-top">
             <div class="card text-center">
                 <div class="col align-self-center bg-dark">
-                    <img class="rounded-circle border border-primary mt-3" width="200" src="https://picsum.photos/50/50" alt="">
+                    <img class="rounded-circle border border-primary mt-3" width="200" th:if="*{user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(user.img)}}" alt="">
                     <h5 class="card-title text-white" th:utext="${userPetName}"></h5>
                 </div>
                 <div class="card-header">
@@ -78,14 +78,48 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 align-self-top">
+        <div class="col-md-5 align-self-top">
             <div class="card text-center">
                 <div class="col align-self-center bg-dark">
-
                     <h5 class="card-title text-white">My Posts</h5>
+                </div>
+            </div>
+            <div class="card gedf-card" th:each="post: ${posts}" th:if="${post.user.id == user.id}">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" th:if="*{post.user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.user.img)}}" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0" th:utext="${post.user.userPetName}"></div>
+                                <div class="h7 text-muted" th:utext="${post.user.name}" ></div>
+                            </div>
+                        </div>
+                        <!--                        <div>-->
+                        <!--                            <div class="dropdown">-->
+                        <!--                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--                                    <i class="fa fa-ellipsis-h"></i>-->
+                        <!--                                </button>-->
+                        <!--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop">-->
+                        <!--                                    <div class="h6 dropdown-header">Configuration</div>-->
+                        <!--                                    <a class="dropdown-item" href="#">Save</a>-->
+                        <!--                                    <a class="dropdown-item" href="#">Hide</a>-->
+                        <!--                                    <a class="dropdown-item" href="#">Report</a>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
 
                 </div>
-                <div class="card-header">
+                <div class="card-body">
+                    <p class="card-text" th:utext="${post.post_content}"></p>
+                    <img th:if="*{post.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.img)}}" style="max-width:100%;"/>
+                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o" th:utext="${post.agoTime}"></i></div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <!--                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>-->
                 </div>
             </div>
         </div>
@@ -97,41 +131,62 @@
 
                 </div>
                 <div class="card-header">
-                    <form autocomplete="off" action="#" th:action="@{/user/profile}"
-                          th:object="${user}" method="post" class="form-horizontal"
+                    <form autocomplete="off" th:action="@{/user/editUser}"
+                          enctype="multipart/form-data" method="post" class="form-horizontal"
                           role="form">
+
                         <div class="form-group">
                             <div class="col-md-13">
-                                <input type="text" th:field="*{name}" placeholder="Name"
+                                <input type="text"  placeholder="Name" id="name" name="name" th:value="${user.name}"
                                        class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-13">
-                                <input type="text" th:field="*{lastName}"
+                                <input type="text" id="lastName" th:value="${user.lastName}" name="lastName"
                                        placeholder="Last Name" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-13">
-                                <input type="text" th:field="*{userPetName}"
+                                <input type="text" id="petName" th:value="${user.userPetName}" name="petName"
                                        placeholder="Pet Name" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-13">
-                                <input type="text" th:field="*{userPetName}"
+                                <input type="file" accept="image/*" id="customFile" name="customFile"
+                                       onchange="document.getElementById('filelabel').innerHTML = $(this).val().replace(/C:\\fakepath\\/i, '')">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-13">
+                                <input type="text" id="description" name="description"
                                        placeholder="Description" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-13">
-                                <input type="password" th:field="*{password}"
-                                       placeholder="Password" class="form-control"/>
+                                <input type="password" id="oldPassword" name="oldPassword"
+                                       placeholder="Old Password" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-13">
+                                <input type="password" id="newPassword" name="newPassword"
+                                       placeholder="New Password" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-13">
+                                <input type="password" id="confirmNewPassword" name="confirmNewPassword"
+                                       placeholder="Confirm New Password" class="form-control"/>
                             </div>
                         </div>
 
@@ -140,7 +195,6 @@
                                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
                             </div>
                         </div>
-
                         <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
 
                     </form>

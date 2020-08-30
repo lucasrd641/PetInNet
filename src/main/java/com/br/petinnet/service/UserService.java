@@ -2,14 +2,17 @@ package com.br.petinnet.service;
 
 import com.br.petinnet.model.Post;
 import com.br.petinnet.model.User;
+import com.br.petinnet.repository.PostRepository;
 import com.br.petinnet.repository.RoleRepository;
 import com.br.petinnet.model.Role;
 import com.br.petinnet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -19,14 +22,17 @@ public class UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PostRepository postRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
+                       PostRepository postRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.postRepository = postRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -41,6 +47,9 @@ public class UserService {
     }
     public void followById(int userId, int id) {userRepository.followById(userId,id);}
     public void unFollowById(int userId, int id) {userRepository.unFollowById(userId,id);}
+    public List<Post> findPostsById(int id) {
+        return postRepository.findPostsById(id);
+    }
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -50,14 +59,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User editUser(User user) {
-
+    public void editUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        user.setActive(true);
+        Role userRole = roleRepository.findByRole("USER");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
     }
 
-    public void savePost(Post post) {
+    public void savePost(Post post){
+        postRepository.savePost(post.getImg(),post.getPost_content(),post.getPost_datetime(),post.getUser().getId());
+    }
 
-        userRepository.savePost(post.getId(),post.getImg(),post.getPost_content(),post.getPost_datetime(),post.getUser().getId());
+
+    public boolean checkOldPassword(String oldPassword,String userPassword) {
+        return bCryptPasswordEncoder.matches(oldPassword,userPassword);
     }
 }
