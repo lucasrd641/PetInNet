@@ -96,19 +96,6 @@
                                 <div class="h7 text-muted" th:utext="${post.user.name}" ></div>
                             </div>
                         </div>
-                        <!--                        <div>-->
-                        <!--                            <div class="dropdown">-->
-                        <!--                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                        <!--                                    <i class="fa fa-ellipsis-h"></i>-->
-                        <!--                                </button>-->
-                        <!--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop">-->
-                        <!--                                    <div class="h6 dropdown-header">Configuration</div>-->
-                        <!--                                    <a class="dropdown-item" href="#">Save</a>-->
-                        <!--                                    <a class="dropdown-item" href="#">Hide</a>-->
-                        <!--                                    <a class="dropdown-item" href="#">Report</a>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
 
                 </div>
@@ -118,7 +105,15 @@
                     <div class="text-muted h7 mb-2"><i class="fa fa-clock-o" th:utext="${post.agoTime}"></i></div>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <div class="card-footer">
+                        <div th:if="${post.getPostUserRelations().contains(user)}">
+                            <a class="card-link" th:href="@{/user/dislike?id={id}(id=${post.id})}"><i class="fa fa-gittip" style="color:red"></i> Unlike <i class="fa fa-arrow-circle-up" style="color:green" th:utext="${post.likes}"></i></a>
+                        </div>
+                        <div th:if="${!post.getPostUserRelations().contains(user)}">
+                            <a class="card-link" th:href="@{/user/like?id={id}(id=${post.id})}"><i class="fa fa-gittip"></i> Like <i class="fa fa-arrow-circle-up" style="color:green" th:utext="${post.likes}"></i></a>
+                        </div>
+                        <!--                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>-->
+                    </div>
                     <!--                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>-->
                 </div>
             </div>

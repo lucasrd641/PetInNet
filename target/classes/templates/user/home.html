@@ -190,7 +190,12 @@
                     <div class="text-muted h7 mb-2"><i class="fa fa-clock-o" th:utext="${post.agoTime}"></i></div>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <div th:if="${post.getPostUserRelations().contains(user)}">
+                        <a class="card-link" th:href="@{/user/dislike?id={id}(id=${post.id})}"><i class="fa fa-gittip" style="color:red"></i> Unlike <i class="fa fa-arrow-circle-up" style="color:green" th:utext=" ${post.likes}"></i></a>
+                    </div>
+                    <div th:if="${!post.getPostUserRelations().contains(user)}">
+                        <a class="card-link" th:href="@{/user/like?id={id}(id=${post.id})}"><i class="fa fa-gittip"></i> Like <i class="fa fa-arrow-circle-up" style="color:green" th:utext=" ${post.likes}"></i></a>
+                    </div>
 <!--                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>-->
                 </div>
             </div>

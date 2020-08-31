@@ -34,7 +34,7 @@
                 <a class="nav-link" href="/user/profile">My Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Your NewsFeed</a>
+                <a class="nav-link" href="/user/home">Your NewsFeed</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Have you seen me?</a>
@@ -63,7 +63,7 @@
         <div class="col-md-3 align-self-center">
             <div class="card text-center">
                 <div class="col align-self-center bg-dark">
-                    <img class="rounded-circle border border-primary mt-3" width="200" src="https://picsum.photos/50/50" alt="">
+                    <img class="rounded-circle border border-primary mt-3" width="200" th:if="*{user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(user.img)}}" alt="">
                     <h5 class="card-title text-white" th:utext="${userPetName}"></h5>
                 </div>
                 <div class="card-header">
@@ -79,26 +79,26 @@
             </div>
         </div>
         <div class="col-md-6 align-self-top" >
-            <div class=" row card gedf-card" th:each="user : ${users}">
+            <div class=" row card gedf-card" th:each="u : ${users}">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-2">
-                                <img class="rounded-circle" width="45" src="static/images/iconPaw.png" alt="">
+                                <img class="rounded-circle" width="45" th:if="*{u.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(u.img)}}" alt="">
                             </div>
                             <div class="ml-2">
-                                <div class="h5 m-0" th:utext="${user.userPetName}"></div>
-                                <div class="h7 text-muted" th:utext="${user.name}" ></div>
+                                <div class="h5 m-0" th:utext="${u.userPetName}"></div>
+                                <div class="h7 text-muted" th:utext="${u.name}" ></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div th:if="${userMain.getFollowing().contains(user)}">
-                        <a class="card-link" th:href="@{/user/unfollow?id={id}(id=${user.id})}"><i class="fa fa-gittip" style="color:red"></i>Unfollow</a>
+                    <div th:if="${user.getFollowing().contains(u)}">
+                        <a class="card-link" th:href="@{/user/unfollow?id={id}(id=${u.id})}"><i class="fa fa-gittip" style="color:red"></i>Unfollow</a>
                     </div>
-                    <div th:if="${!userMain.getFollowing().contains(user)}">
-                        <a class="card-link" th:href="@{/user/follow?id={id}(id=${user.id})}"><i class="fa fa-gittip"></i>Follow</a>
+                    <div th:if="${!user.getFollowing().contains(u)}">
+                        <a class="card-link" th:href="@{/user/follow?id={id}(id=${u.id})}"><i class="fa fa-gittip"></i>Follow</a>
                     </div>
                 </div>
             </div>

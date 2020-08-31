@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -37,5 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "DELETE FROM user_follower WHERE user_id = :user_id AND follower_id = :follower_id", nativeQuery = true)
     void unFollowById(@Param("user_id") Integer userId, @Param("follower_id") Integer id);
 
-
+    @Query(value="SELECT u.* FROM users u JOIN post_like pl ON pl.user_id=u.user_id WHERE pl.user_id=:user_id AND pl.post_id=:post_id", nativeQuery = true)
+    Set<User> getRelationsById(Integer user_id, Integer post_id);
 }

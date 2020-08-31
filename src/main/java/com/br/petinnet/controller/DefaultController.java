@@ -6,30 +6,18 @@ import com.br.petinnet.model.User;
 import com.br.petinnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.imageio.ImageIO;
-import javax.security.sasl.AuthenticationException;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,17 +47,6 @@ public class DefaultController {
         return modelAndView;
     }
 
-//    @GetMapping(value="/user/createpost")
-//    public ModelAndView createPost(){
-//        ModelAndView modelAndView = new ModelAndView();
-//        Post post = new Post();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByUserName(auth.getName());
-//        post.setId_user(user.getId());
-//        modelAndView.addObject("post_user", post);
-//        modelAndView.setViewName("user/createpost");
-//        return modelAndView;
-//    }
     @RequestMapping(value = "/user/createpost")
     public ModelAndView createPost(@RequestParam("message") String message,@RequestParam(value="customFile", required = false) MultipartFile file) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -81,7 +58,7 @@ public class DefaultController {
         LocalDateTime lt = LocalDateTime.now();
         post.setPost_datetime(lt);
         post.setImg(barr);
-
+        post.setLikes(0);
         userService.savePost(post);
         ModelAndView modelAndView = getAllHome();
         modelAndView.setViewName("/user/home");
@@ -145,6 +122,26 @@ public class DefaultController {
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
+    @GetMapping(value = "/user/like{id}")
+    public ModelAndView likeById(@RequestParam(value="id",required = true) Integer id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        userService.likePostById(user.getId(),id);
+        ModelAndView modelAndView = getAllHome();
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
+    @GetMapping(value = "/user/dislike{id}")
+    public ModelAndView dislikeById(@RequestParam(value="id",required = true) Integer id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        userService.unlikePostById(user.getId(),id);
+        ModelAndView modelAndView = getAllHome();
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
     @GetMapping(value="/home")
     public ModelAndView homeMain(){
         String redirected;
@@ -182,8 +179,11 @@ public class DefaultController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<Post> posts = userService.findPostsById(user.getId());
+
         LocalDateTime lt = LocalDateTime.now();
         for (Post p:posts) {
+            p.setPostUserRelations(userService.getRelationsById(user.getId(),p.getId()));
+            p.setLikes(userService.getLikes(p.getId()));
             Duration duration = Duration.between(p.getPost_datetime(),lt);
             if (duration.toSeconds()<=60){
                 p.setAgoTime(" "+(duration.toSeconds()<=1? " Just now" : duration.toSeconds()+" seconds ago" ));

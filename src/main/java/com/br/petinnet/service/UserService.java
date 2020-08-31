@@ -9,13 +9,11 @@ import com.br.petinnet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -68,11 +66,27 @@ public class UserService {
     }
 
     public void savePost(Post post){
-        postRepository.savePost(post.getImg(),post.getPost_content(),post.getPost_datetime(),post.getUser().getId());
+        postRepository.savePost(post.getImg(),post.getPost_content(),post.getPost_datetime(),post.getUser().getId(),post.getLikes());
     }
 
 
     public boolean checkOldPassword(String oldPassword,String userPassword) {
         return bCryptPasswordEncoder.matches(oldPassword,userPassword);
+    }
+
+    public void likePostById(Integer user_id, Integer post_id) {
+        postRepository.likePostById(user_id,post_id);
+    }
+
+    public void unlikePostById(Integer user_id, Integer post_id) {
+        postRepository.unlikePostById(user_id,post_id);
+    }
+
+    public int getLikes(Integer id) {
+        return postRepository.getLikes(id);
+    }
+
+    public Set<User> getRelationsById(Integer user_id, Integer post_id) {
+        return userRepository.getRelationsById(user_id,post_id);
     }
 }

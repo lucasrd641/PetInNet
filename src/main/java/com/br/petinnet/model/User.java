@@ -67,7 +67,11 @@ public class User {
     @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private List<User> following;
 
+
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+
+    @ManyToMany(mappedBy = "postUserRelations")
+    private Set<Post> postsR;
 
 }
