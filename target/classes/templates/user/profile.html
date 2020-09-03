@@ -63,7 +63,7 @@
         <div class="col-md-3 align-self-top">
             <div class="card text-center">
                 <div class="col align-self-center bg-dark">
-                    <img class="rounded-circle border border-primary mt-3" width="200" th:if="*{user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(user.img)}}" alt="">
+                    <img class="rounded-circle border border-primary mt-3" width="200" height="200" th:if="*{user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(user.img)}}" alt="">
                     <h5 class="card-title text-white" th:utext="${userPetName}"></h5>
                 </div>
                 <div class="card-header">
@@ -89,7 +89,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-2">
-                                <img class="rounded-circle" width="45" th:if="*{post.user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.user.img)}}" alt="">
+                                <img class="rounded-circle" width="60" height="60" th:if="*{post.user.getImg().length > 0}" th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(post.user.img)}}" alt="">
                             </div>
                             <div class="ml-2">
                                 <div class="h5 m-0" th:utext="${post.user.userPetName}"></div>
